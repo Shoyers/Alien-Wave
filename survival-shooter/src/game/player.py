@@ -10,18 +10,31 @@ class Player:
         self.y = y
         self.health = 100
         self.score = 0
-        # Surface principale du joueur
-        self.image = pygame.Surface((PLAYER_SIZE, PLAYER_SIZE), pygame.SRCALPHA)
         
-        # Dessin du joueur avec un effet de "glow"
-        center = PLAYER_SIZE // 2
-        pygame.draw.circle(self.image, (*PLAYER_COLOR, 128), (center, center), PLAYER_SIZE//2)  # Aura
-        pygame.draw.circle(self.image, PLAYER_COLOR, (center, center), PLAYER_SIZE//3)  # Corps
+        # Chargement et configuration du sprite du joueur
+        try:
+            self.original_image = pygame.image.load(PLAYER_SPRITE).convert_alpha()
+            # Augmentation de la taille à 96x96 (PLAYER_SIZE * 3)
+            self.original_image = pygame.transform.scale(self.original_image, (PLAYER_SIZE * 3, PLAYER_SIZE * 3))
+            # Rotation initiale de 270 degrés (90 + 180)
+            self.original_image = pygame.transform.rotate(self.original_image, 270)
+            # Retournement horizontal du sprite
+            self.original_image = pygame.transform.flip(self.original_image, True, False)
+            self.image = self.original_image
+        except Exception as e:
+            print(f"Erreur lors du chargement de l'image du joueur: {e}")
+            # Fallback au dessin par défaut avec la nouvelle taille
+            self.original_image = pygame.Surface((PLAYER_SIZE * 3, PLAYER_SIZE * 3), pygame.SRCALPHA)
+            center = PLAYER_SIZE * 1.5
+            pygame.draw.circle(self.original_image, (*PLAYER_COLOR, 128), (center, center), PLAYER_SIZE * 1.5)
+            pygame.draw.circle(self.original_image, PLAYER_COLOR, (center, center), PLAYER_SIZE)
+            self.image = self.original_image
         
         self.rect = self.image.get_rect(center=(x, y))
         self.bullets = pygame.sprite.Group()
         self.last_shot = 0
-        self.trail = []  # Pour l'effet de traînée
+        self.trail = []
+        self.angle = 0
 
     def update(self):
         # Gestion du mouvement avec les touches ZQSD/WASD
@@ -34,6 +47,16 @@ class Player:
             self.move(-PLAYER_SPEED, 0)
         if keys[pygame.K_d]:  # Droite
             self.move(PLAYER_SPEED, 0)
+
+        # Rotation en fonction de la position de la souris
+        mouse_x, mouse_y = pygame.mouse.get_pos()
+        dx = mouse_x - self.rect.centerx
+        dy = mouse_y - self.rect.centery
+        self.angle = math.degrees(math.atan2(-dy, dx))
+        
+        # Rotation du sprite
+        self.image = pygame.transform.rotate(self.original_image, self.angle)
+        self.rect = self.image.get_rect(center=self.rect.center)
 
         # Gestion du tir avec le clic gauche
         mouse_buttons = pygame.mouse.get_pressed()

@@ -62,7 +62,7 @@ ASSETS_DIR = os.path.join(BASE_DIR, "assets")
 EFFECTS_DIR = os.path.join(ASSETS_DIR, "effects")
 
 # Assets paths
-PLAYER_SPRITE = os.path.join(ASSETS_DIR, "player.png")
+PLAYER_SPRITE = os.path.join(ASSETS_DIR,'sprites', "player.png")
 ENEMY_SPRITE = os.path.join(ASSETS_DIR, "enemy.png")
 SHOOTER_ENEMY_SPRITE = os.path.join(ASSETS_DIR, "shooter_enemy.png")
 BULLET_SPRITE = os.path.join(ASSETS_DIR, "bullet.png")
