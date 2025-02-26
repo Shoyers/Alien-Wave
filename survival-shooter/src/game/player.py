@@ -16,7 +16,7 @@ class Player:
             self.original_image = pygame.image.load(PLAYER_SPRITE).convert_alpha()
             # Augmentation de la taille à 96x96 (PLAYER_SIZE * 3)
             self.original_image = pygame.transform.scale(self.original_image, (PLAYER_SIZE * 3, PLAYER_SIZE * 3))
-            # Rotation initiale de 270 degrés (90 + 180)
+            # Rotation initiale de 270 degrés + retournement du sprite
             self.original_image = pygame.transform.rotate(self.original_image, 270)
             # Retournement horizontal du sprite
             self.original_image = pygame.transform.flip(self.original_image, True, False)
@@ -34,7 +34,7 @@ class Player:
         self.bullets = pygame.sprite.Group()
         self.last_shot = 0
         self.trail = []
-        self.angle = 0
+        self.angle = 0  # Pour suivre l'angle de rotation actuel
 
     def update(self):
         # Gestion du mouvement avec les touches ZQSD/WASD

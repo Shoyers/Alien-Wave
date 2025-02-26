@@ -42,6 +42,14 @@ class Game:
         # Configuration de l'écran
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         pygame.display.set_caption("SHOOTER SURVIVAL")
+        
+        # Chargement du logo avec gestion d'erreur
+        try:
+            self.icon = pygame.image.load(GAME_LOGO)
+            pygame.display.set_icon(self.icon)  # Ajout de cette ligne pour définir l'icône
+        except Exception as e:
+            print(f"Erreur lors du chargement du logo: {e}")
+        
         self.clock = pygame.time.Clock()
         
         # Initialisation des polices

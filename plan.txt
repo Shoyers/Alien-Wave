@@ -24,6 +24,7 @@
   * Barre de vie du joueur
   * Score actuel
   * Numéro de vague
+  * Meilleur score
   * Compteur d'ennemis
 - Menu pause
 - Écran game over avec restart
@@ -43,4 +44,8 @@
 - Son de mort des ennemis
 - Musique de fond
 - Système de gestion du volume
+
+7. Sprites
+- Sprites du joueur
+
 

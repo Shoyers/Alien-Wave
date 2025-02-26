@@ -67,7 +67,7 @@ ENEMY_SPRITE = os.path.join(ASSETS_DIR, "enemy.png")
 SHOOTER_ENEMY_SPRITE = os.path.join(ASSETS_DIR, "shooter_enemy.png")
 BULLET_SPRITE = os.path.join(ASSETS_DIR, "bullet.png")
 ENEMY_BULLET_SPRITE = os.path.join(ASSETS_DIR, "enemy_bullet.png")
-GAME_LOGO = os.path.join(ASSETS_DIR, "logo.png")
+GAME_LOGO = os.path.join(ASSETS_DIR, "logo.ico")
 
 # Sound paths
 SOUND_DIR = os.path.join(ASSETS_DIR, "sounds")
@@ -136,4 +136,9 @@ ENGINE_COLORS = [(50, 100, 255), (100, 150, 255), (150, 200, 255)]  # Couleurs d
 
 # Score settings
 SCORE_FILE = os.path.join(BASE_DIR, "data", "highscore.json")
+
+# Vérification de l'existence du logo
+if not os.path.exists(GAME_LOGO):
+    print(f"ATTENTION: Le fichier {GAME_LOGO} n'existe pas!")
+    print(f"Chemin complet attendu: {os.path.abspath(GAME_LOGO)}")
 
