@@ -40,7 +40,7 @@ class Game:
         
         # Configuration de l'écran
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-        pygame.display.set_caption("CYBER SURVIVAL")
+        pygame.display.set_caption("SHOOTER SURVIVAL")
         self.clock = pygame.time.Clock()
         
         # Initialisation des polices
@@ -142,13 +142,14 @@ class Game:
             self.last_spawn = current_time
             
     def update_wave(self):
-        if self.enemies_killed >= ENEMIES_PER_WAVE:
+        if self.enemies_killed >= self.wave_enemies_left:
             if not self.wave_transition:
                 self.wave_transition = True
                 self.wave_start_time = pygame.time.get_ticks()
                 self.wave += 1
                 self.enemies_killed = 0
-                self.wave_enemies_left = ENEMIES_PER_WAVE
+                # Calcul du nouveau nombre d'ennemis avec le coefficient
+                self.wave_enemies_left = int(ENEMIES_PER_WAVE * (WAVE_ENEMY_MULTIPLIER ** (self.wave - 1)))
                 self.spawn_cooldown = max(500, self.spawn_cooldown - WAVE_SPEEDUP)
                 
         if self.wave_transition:

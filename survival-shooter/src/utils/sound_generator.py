@@ -1,6 +1,5 @@
 import pygame
 import numpy as np
-import io
 from array import array
 import os
 import wave

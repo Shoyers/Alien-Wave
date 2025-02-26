@@ -11,12 +11,6 @@ survival-shooter
 │   └── utils
 │       ├── __init__.py
 │       └── constants.py
-├── docs
-│   ├── prompt.txt
-│   ├── requirements.txt
-│   └── plan.txt
-├── tests
-│   ├── __init__.py
-│   └── test_game.py
+|
 ├── pyproject.toml
 └── README.md

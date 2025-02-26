@@ -82,7 +82,8 @@ class Player:
                 direction = (dx/distance, dy/distance)
                 bullet = Bullet(self.x, self.y, direction)
                 self.bullets.add(bullet)
-                self.play_sound('shoot')
+                if hasattr(self, 'game') and self.game.shoot_sound and not self.game.sound_muted:
+                    pygame.mixer.find_channel(True).play(self.game.shoot_sound)
                 self.last_shot = current_time
 
     def draw(self, screen):

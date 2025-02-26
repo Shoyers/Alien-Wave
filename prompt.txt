@@ -1,0 +1,55 @@
+# Description du Jeu
+SHOOTER SURVIVAL est un jeu de tir arcade vu du dessus avec une esthétique rétro-futuriste.
+Le joueur doit survivre à des vagues d'ennemis de plus en plus difficiles en utilisant
+ses réflexes et sa précision.
+
+# Historique des Prompts
+
+## Prompt 1 - Base du Jeu 
+- Création d'un shooter vu du dessus
+- Déplacement du joueur avec ZQSD
+- Graphisme minimaliste
+- Vue top-down
+
+## Prompt 2 - Système de Combat
+- Ajout du système de tir à la souris
+- Spawn des ennemis sur les bords de l'écran
+- Collisions basiques
+- Système de projectiles
+
+## Prompt 3 - Interface Utilisateur
+- Affichage du HUD
+- Compteur d'ennemis en vie
+- Barre de vie du joueur
+- Indicateur des ennemis actifs
+
+## Prompt 4 - Système de Mort
+- Implémentation de la mort du joueur
+- Système de dégâts
+- Animation de mort
+- Condition de défaite
+
+## Prompt 5 - Menu Game Over
+- Écran de game over
+- Bouton de restart
+- Affichage du score final
+- Option pour quitter
+
+## Prompt 6 - Amélioration des Tirs
+- Système de particules pour les tirs
+- Traînées lumineuses
+- Effets d'impact
+- Animations des projectiles
+
+## Prompt 7 - Ennemis Avancés
+- Nouvel type d'ennemi qui tire
+- IA de tir pour les ennemis
+- Patterns de tir différents
+- Distinction visuelle des types d'ennemis
+
+## Prompt 8 - Sound Design
+- Sons pour les tirs
+- Sons pour les impacts
+- Musique de fond
+- Sons pour les ennemis
+- Effets sonores pour le joueur

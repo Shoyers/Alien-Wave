@@ -3,40 +3,30 @@
 # Survival Shooter Game
 
 ## Description
-Survival Shooter is an engaging and action-packed game built using Pygame. Players will navigate through various challenges, battling enemies and managing resources to survive.
+Survival Shooter est un jeu d'action dynamique développé avec Pygame. Les joueurs doivent survivre à des vagues d'ennemis de plus en plus difficiles en utilisant leurs réflexes et leur précision.
 
-## Features
-- Player movement and shooting mechanics
-- Enemy AI with unique behaviors
-- Various weapons with different functionalities
-- Health management for both players and enemies
+## Fonctionnalités
+- Déplacement du joueur avec ZQSD et tir à la souris
+- IA des ennemis avec différents comportements
+- Système de vagues progressives
+- Effets visuels et sonores
+- Interface utilisateur intuitive
 
 ## Installation
-To get started with the Survival Shooter game, follow these steps:
+Pour commencer à jouer à Survival Shooter, suivez ces étapes :
 
-1. Clone the repository:
+1. Clonez le dépôt :
    ```
-   git clone <repository-url>
-   ```
-
-2. Navigate to the project directory:
-   ```
-   cd survival-shooter
+   git clone <url-du-dépôt>
    ```
 
-3. Install the required dependencies:
+3. Installez les dépendances requises :
    ```
    pip install -r docs/requirements.txt
    ```
 
-## Usage
-To run the game, execute the following command:
+## Lancement du jeu
+Pour lancer le jeu, exécutez la commande suivante depuis le dossier racine :
 ```
-python src/main.py
+python survival-shooter/src/main.py
 ```
-
-## Contributing
-Contributions are welcome! Please feel free to submit a pull request or open an issue for any suggestions or improvements.
-
-## License
-This project is licensed under the MIT License. See the LICENSE file for details.

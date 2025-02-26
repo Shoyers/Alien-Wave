@@ -1,0 +1,46 @@
+1. Setup du projet
+- Installation de pygame et dépendances
+- Structure des dossiers (src, assets, utils)
+- Configuration de base pygame (fenêtre, FPS)
+- Initialisation du système audio (mixer)
+
+2. Core Mechanics
+- Système de mouvement ZQSD avec collision aux bords
+- Système de tir à la souris avec cooldown
+- Gestion des projectiles et leurs collisions
+- Système de score
+- Système de vagues
+
+3. Système d'Ennemis
+- Spawn system sur les bords de l'écran
+- Pathfinding vers le joueur
+- Deux types d'ennemis :
+  * Ennemi basique (corps à corps)
+  * Ennemi tireur (distance)
+- Patterns de mouvement et d'attaque
+
+4. Interface Utilisateur
+- HUD en temps réel :
+  * Barre de vie du joueur
+  * Score actuel
+  * Numéro de vague
+  * Compteur d'ennemis
+- Menu pause
+- Écran game over avec restart
+- Bouton son on/off
+
+5. Effets Visuels
+- Système de particules pour les tirs
+- Traînées lumineuses des projectiles
+- Effets de "glow" sur les entités
+- Animation de mort des ennemis
+- Fond étoilé dynamique
+- Effets rétro
+
+6. Sound Design
+- Sons des tirs (joueur et ennemis)
+- Sons des impacts et dégâts
+- Son de mort des ennemis
+- Musique de fond
+- Système de gestion du volume
+
