@@ -134,3 +134,6 @@ TILT_ANGLE = 15  # Angle maximum d'inclinaison des vaisseaux
 SHIP_GLOW = (100, 100, 255, 128)  # Lueur des vaisseaux
 ENGINE_COLORS = [(50, 100, 255), (100, 150, 255), (150, 200, 255)]  # Couleurs des réacteurs
 
+# Score settings
+SCORE_FILE = os.path.join(BASE_DIR, "data", "highscore.json")
+

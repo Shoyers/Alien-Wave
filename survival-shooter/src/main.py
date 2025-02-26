@@ -3,6 +3,7 @@ import sys
 import random
 import os
 import math
+import json
 from utils.constants import *
 from game.player import Player
 from game.enemy import Enemy, ShootingEnemy
@@ -95,6 +96,9 @@ class Game:
         self.star_speeds = [0.3, 0.5, 0.8]  # Vitesses plus douces
         self.generate_stars()
         
+        # Après l'initialisation existante
+        self.highscore = self.load_highscore()
+        
     def set_volume(self, volume):
         """Configure le volume pour tous les sons"""
         try:
@@ -142,7 +146,8 @@ class Game:
             self.last_spawn = current_time
             
     def update_wave(self):
-        if self.enemies_killed >= self.wave_enemies_left:
+        # On change de vague uniquement si tous les ennemis prévus sont apparus ET qu'il n'y en a plus sur le terrain
+        if self.wave_enemies_left <= 0 and len(self.enemies) == 0:
             if not self.wave_transition:
                 self.wave_transition = True
                 self.wave_start_time = pygame.time.get_ticks()
@@ -206,6 +211,11 @@ class Game:
         score_rect = score_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))
         self.screen.blit(score_text, score_rect)
         
+        # Affichage du meilleur score
+        highscore_text = self.font.render(f"Meilleur Score: {self.highscore}", True, CYAN)
+        highscore_rect = highscore_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 40))
+        self.screen.blit(highscore_text, highscore_rect)
+        
         # Bouton Restart
         restart_text = self.font.render("Appuyez sur ESPACE pour recommencer", True, CYAN)
         restart_rect = restart_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT * 2 // 3))
@@ -218,6 +228,7 @@ class Game:
         
     def game_over(self):
         self.game_state = "game_over"
+        self.update_highscore()
         
     def handle_game_over_input(self):
         keys = pygame.key.get_pressed()
@@ -228,7 +239,7 @@ class Game:
             sys.exit()
             
     def draw_hud(self):
-        # Affichage de la santé
+        # Affichage de la santé à gauche
         health_text = self.font.render(f"Vie: {self.player.health}", True, WHITE)
         health_rect = health_text.get_rect(topleft=(20, 20))
         self.screen.blit(health_text, health_rect)
@@ -240,24 +251,33 @@ class Game:
         pygame.draw.rect(self.screen, RED, (20, 50, health_bar_width, health_bar_height), 2)
         pygame.draw.rect(self.screen, RED, (20, 50, health_bar_width * health_ratio, health_bar_height))
         
-        # Affichage du score
+        # Affichage du score actuel en haut à droite
         score_text = self.font.render(f"Score: {self.player.score}", True, WHITE)
         score_rect = score_text.get_rect(topright=(SCREEN_WIDTH - 20, 20))
         self.screen.blit(score_text, score_rect)
         
-        # Affichage de la vague
+        # Affichage de la vague au centre
         wave_text = self.font.render(f"Vague {self.wave}", True, CYAN)
         wave_rect = wave_text.get_rect(midtop=(SCREEN_WIDTH // 2, 20))
         self.screen.blit(wave_text, wave_rect)
         
-        # Affichage du nombre d'ennemis
+        # Affichage du meilleur score sous la vague
+        highscore_text = self.font.render(f"Meilleur Score : {self.highscore}", True, CYAN)
+        highscore_rect = highscore_text.get_rect(midtop=(SCREEN_WIDTH // 2, 60))
+        self.screen.blit(highscore_text, highscore_rect)
+        
+        # Informations sur les ennemis à droite (réorganisées)
+        y_offset = 60  # Commence plus haut pour combler l'espace
+        spacing = 35   # Espacement réduit entre les lignes
+        
+        # Nombre d'ennemis actifs
         enemies_text = self.font.render(f"Ennemis: {len(self.enemies)}", True, WHITE)
-        enemies_rect = enemies_text.get_rect(topright=(SCREEN_WIDTH - 20, 60))
+        enemies_rect = enemies_text.get_rect(topright=(SCREEN_WIDTH - 20, y_offset))
         self.screen.blit(enemies_text, enemies_rect)
         
-        # Affichage des ennemis restants pour la vague
+        # Ennemis restants à faire apparaître
         remaining_text = self.font.render(f"Restants: {self.wave_enemies_left}", True, WHITE)
-        remaining_rect = remaining_text.get_rect(topright=(SCREEN_WIDTH - 20, 100))
+        remaining_rect = remaining_text.get_rect(topright=(SCREEN_WIDTH - 20, y_offset + spacing))
         self.screen.blit(remaining_text, remaining_rect)
         
         # Bouton son en bas à droite
@@ -413,6 +433,31 @@ class Game:
     def get_background_music_volume(self):
         """Retourne le volume courant de la musique de fond"""
         return pygame.mixer.music.get_volume()
+
+    def load_highscore(self):
+        try:
+            if not os.path.exists(os.path.dirname(SCORE_FILE)):
+                os.makedirs(os.path.dirname(SCORE_FILE))
+            if os.path.exists(SCORE_FILE):
+                with open(SCORE_FILE, 'r') as f:
+                    data = json.load(f)
+                    return data.get('highscore', 0)
+            return 0
+        except Exception as e:
+            print(f"Erreur lors du chargement du meilleur score: {e}")
+            return 0
+
+    def save_highscore(self):
+        try:
+            with open(SCORE_FILE, 'w') as f:
+                json.dump({'highscore': self.highscore}, f)
+        except Exception as e:
+            print(f"Erreur lors de la sauvegarde du meilleur score: {e}")
+
+    def update_highscore(self):
+        if self.player.score > self.highscore:
+            self.highscore = self.player.score
+            self.save_highscore()
 
     def run(self):
         while True:
