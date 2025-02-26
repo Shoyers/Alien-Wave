@@ -1,0 +1,35 @@
+survival-shooter
+├── src
+│   ├── main.py
+│   ├── game
+│   │   ├── __init__.py
+│   │   ├── player.py
+│   │   ├── enemy.py
+│   │   └── weapon.py
+│   ├── ui
+│   │   ├── __init__.py
+│   │   └── menu_manager.py
+│   ├── assets
+│   │   ├── __init__.py
+│   │   ├── sprites/
+│   │   │   ├── player.png
+│   │   │   ├── enemy.png
+│   │   │   └── shooter_enemy.png
+│   │   └── sounds/
+│   │       ├── shoot.wav
+│   │       ├── hit.wav
+│   │       ├── enemy_death.wav
+│   │       ├── player_hurt.wav
+│   │       └── enemy_shoot.wav
+│   │       
+│   ├── utils
+│   │   ├── __init__.py
+│   │   ├── constants.py
+│   │   └── sound_generator.py
+│   └── data
+│       └── highscore.json
+├── pyproject.toml
+├── README.md
+├── plan.txt
+├── prompt.txt
+└── requirements.txt
