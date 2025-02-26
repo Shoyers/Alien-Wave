@@ -316,6 +316,23 @@ class Game:
             pygame.draw.line(self.screen, WHITE, (start_x, start_y), (end_x, end_y), 2)
             pygame.draw.line(self.screen, WHITE, (start_x, end_y), (end_x, start_y), 2)
         
+        # Barre de cooldown du bouclier
+        shield_cooldown_width = 200
+        shield_cooldown_height = 20
+        current_time = pygame.time.get_ticks()
+        if self.player.shield_active:
+            shield_ratio = 1 - (current_time - self.player.last_shield_activation) / self.player.shield_duration
+        else:
+            shield_ratio = min(1, (current_time - self.player.last_shield_activation) / self.player.shield_cooldown)
+        
+        pygame.draw.rect(self.screen, RED, (20, 80, shield_cooldown_width, shield_cooldown_height), 2)
+        pygame.draw.rect(self.screen, CYAN, (20, 80, shield_cooldown_width * shield_ratio, shield_cooldown_height))
+        
+        # Texte du cooldown du bouclier
+        shield_text = self.font.render("Bouclier", True, WHITE)
+        shield_rect = shield_text.get_rect(topleft=(20, 110))
+        self.screen.blit(shield_text, shield_rect)
+
     def update_effects(self):
         # Mise à jour des effets visuels
         if TRAIL_EFFECT:
@@ -335,10 +352,23 @@ class Game:
             self.screen.blit(wave_text, wave_rect)
             
     def toggle_sound(self):
-        """Active/désactive le son"""
         self.sound_muted = not self.sound_muted
-        volume = 0 if self.sound_muted else 0.5
-        self.set_volume(volume)
+        
+        # Gestion des effets sonores
+        volume = 0 if self.sound_muted else 0.3
+        for sound in [self.shoot_sound, self.enemy_shoot_sound, 
+                     self.hit_sound, self.enemy_death_sound, 
+                     self.player_hurt_sound]:
+            if sound:
+                sound.set_volume(volume)
+        
+        # Gestion de la musique de fond
+        if self.sound_muted:
+            pygame.mixer.music.pause()
+        else:
+            pygame.mixer.music.unpause()
+            if not pygame.mixer.music.get_busy():
+                self.play_background_music()
 
     def play_sound(self, sound_type):
         if not self.sound_muted:
@@ -507,7 +537,6 @@ class Game:
 
     def run(self):
         while True:
-            # Gestion centralisée des événements
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
@@ -535,6 +564,9 @@ class Game:
                         if (button_x <= mouse_x <= button_x + SOUND_BUTTON_SIZE and 
                             button_y <= mouse_y <= button_y + SOUND_BUTTON_SIZE):
                             self.toggle_sound()
+                    elif event.button == 3:  # Clic droit
+                        if self.game_state == PLAYING:
+                            self.player.activate_shield()
             
             # Fond étoilé toujours actif
             self.screen.fill((5, 5, 15))

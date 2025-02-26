@@ -70,3 +70,10 @@ ses réflexes et sa précision.
 - Affichage dynamique des points de vie
 - Distinction visuelle de la santé restante
 - Positionnement adaptatif de la barre
+
+## Prompt 12 - Système de Bouclier
+- Ajout d'un bouclier activable au clic droit
+- Système de cooldown et durée limitée
+- Effet visuel du bouclier autour du joueur
+- Invincibilité temporaire
+- Interface de cooldown dans le HUD

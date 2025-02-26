@@ -35,6 +35,10 @@ class Player:
         self.last_shot = 0
         self.trail = []
         self.angle = 0  # Pour suivre l'angle de rotation actuel
+        self.shield_active = False
+        self.shield_duration = 5000  # Durée du bouclier en millisecondes
+        self.shield_cooldown = 10000  # Temps de recharge du bouclier
+        self.last_shield_activation = 0
 
     def update(self):
         # Gestion du mouvement avec les touches ZQSD/WASD
@@ -71,6 +75,11 @@ class Player:
             if (bullet.rect.x < 0 or bullet.rect.x > SCREEN_WIDTH or 
                 bullet.rect.y < 0 or bullet.rect.y > SCREEN_HEIGHT):
                 bullet.kill()
+
+        if self.shield_active:
+            current_time = pygame.time.get_ticks()
+            if current_time - self.last_shield_activation >= self.shield_duration:
+                self.shield_active = False
 
     def move(self, dx, dy):
         self.x += dx
@@ -114,14 +123,21 @@ class Player:
         for bullet in self.bullets:
             bullet.draw(screen)
         
-        # Dessin du joueur
+        # Dessin du joueur (toujours visible)
         screen.blit(self.image, self.rect)
+        
+        # Dessin du bouclier par-dessus le joueur
+        if self.shield_active:
+            # Effet de bouclier plus visible avec double cercle
+            pygame.draw.circle(screen, (0, 255, 255), self.rect.center, PLAYER_SIZE * 1.5, 3)
+            pygame.draw.circle(screen, (0, 200, 255), self.rect.center, PLAYER_SIZE * 1.2, 2)
 
     def take_damage(self, amount):
-        self.health -= amount
-        self.play_sound('hurt')
-        if self.health <= 0:
-            self.die()
+        if not self.shield_active:  # Ne prend des dégâts que si le bouclier n'est pas actif
+            self.health -= amount
+            self.play_sound('hurt')
+            if self.health <= 0:
+                self.die()
 
     def die(self):
         # Logic for player death
@@ -129,3 +145,9 @@ class Player:
 
     def gain_score(self, points):
         self.score += points
+
+    def activate_shield(self):
+        current_time = pygame.time.get_ticks()
+        if not self.shield_active and (current_time - self.last_shield_activation >= self.shield_cooldown):
+            self.shield_active = True
+            self.last_shield_activation = current_time
