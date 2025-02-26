@@ -19,6 +19,9 @@
   * Ennemi tireur (distance)
 - Patterns de mouvement et d'attaque
 - Scaling de difficulté par vague
+- Barre de vie au-dessus des ennemis
+  * Affichage dynamique des PV
+  * Couleur rouge/verte
 
 4. Interface Utilisateur
 - Menu d'accueil avec :

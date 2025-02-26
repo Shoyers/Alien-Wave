@@ -7,8 +7,14 @@ from game.weapon import Bullet
 class Enemy(pygame.sprite.Sprite):
     def __init__(self, health, speed):
         super().__init__()
+        self.max_health = health  # Ajout de la santé maximale
         self.health = health
         self.speed = speed
+        
+        # Configuration de la barre de vie
+        self.health_bar_height = 5
+        self.health_bar_width = ENEMY_SIZE
+        self.health_bar_offset = 5  # Distance au-dessus de l'ennemi
         
         # Chargement et redimensionnement du sprite
         try:
@@ -96,7 +102,23 @@ class Enemy(pygame.sprite.Sprite):
         return False
 
     def draw(self, screen):
+        # Dessine l'ennemi
         screen.blit(self.image, self.rect)
+        
+        # Dessine la barre de vie
+        health_percentage = self.health / self.max_health
+        bar_width = int(self.health_bar_width * health_percentage)
+        
+        # Position de la barre de vie au-dessus de l'ennemi
+        bar_x = self.rect.x
+        bar_y = self.rect.y - self.health_bar_offset - self.health_bar_height
+        
+        # Fond de la barre de vie (rouge)
+        pygame.draw.rect(screen, RED, 
+                        (bar_x, bar_y, self.health_bar_width, self.health_bar_height))
+        # Barre de vie actuelle (vert)
+        pygame.draw.rect(screen, (0, 255, 0), 
+                        (bar_x, bar_y, bar_width, self.health_bar_height))
 
 class ShootingEnemy(Enemy):
     def __init__(self, health, speed):

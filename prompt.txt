@@ -64,3 +64,9 @@ ses réflexes et sa précision.
 - Rotation du vaisseau selon la souris
 - Fond étoilé dynamique
 - Effets de particules améliorés
+
+## Prompt 11 - Interface des Ennemis
+- Ajout d'une barre de vie au-dessus des ennemis
+- Affichage dynamique des points de vie
+- Distinction visuelle de la santé restante
+- Positionnement adaptatif de la barre

@@ -238,12 +238,14 @@ class Game:
         self.update_highscore()
         
     def handle_game_over_input(self):
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_SPACE]:
-            self.reset_game()
-        elif keys[pygame.K_ESCAPE]:
-            pygame.quit()
-            sys.exit()
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    self.reset_game()
+                    self.game_state = PLAYING  # Important : définir l'état à PLAYING
+                elif event.key == pygame.K_ESCAPE:
+                    pygame.quit()
+                    sys.exit()
             
     def draw_hud(self):
         # Affichage de la santé à gauche
@@ -505,6 +507,7 @@ class Game:
 
     def run(self):
         while True:
+            # Gestion centralisée des événements
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
@@ -519,6 +522,9 @@ class Game:
                             self.game_state = PLAYING
                     elif event.key == pygame.K_SPACE:
                         if self.game_state == MENU:
+                            self.reset_game()
+                            self.game_state = PLAYING
+                        elif self.game_state == GAME_OVER:
                             self.reset_game()
                             self.game_state = PLAYING
                 elif event.type == pygame.MOUSEBUTTONDOWN:
@@ -546,7 +552,8 @@ class Game:
                 self.update_wave()
                 
                 self.player.draw(self.screen)
-                self.enemies.draw(self.screen)
+                for enemy in self.enemies:
+                    enemy.draw(self.screen)
                 for enemy in self.enemies:
                     if isinstance(enemy, ShootingEnemy):
                         enemy.bullets.draw(self.screen)
@@ -555,7 +562,6 @@ class Game:
             elif self.game_state == PAUSED:
                 # Dessiner le jeu en arrière-plan
                 self.player.draw(self.screen)
-                self.enemies.draw(self.screen)
                 for enemy in self.enemies:
                     if isinstance(enemy, ShootingEnemy):
                         enemy.bullets.draw(self.screen)
@@ -563,8 +569,7 @@ class Game:
                 # Ajouter l'overlay de pause
                 self.draw_pause()
             elif self.game_state == GAME_OVER:
-                self.handle_game_over_input()
-                self.draw_game_over()
+                self.draw_game_over()  # Plus besoin d'appeler handle_game_over_input()
             
             pygame.display.flip()
             self.clock.tick(FPS)
