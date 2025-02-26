@@ -57,7 +57,7 @@ class Game:
         self.big_font = pygame.font.Font(None, 72)
         
         # État du jeu
-        self.game_state = "playing"  # "playing" ou "game_over"
+        self.game_state = MENU  # État initial sur le menu
         
         self.wave_enemies_left = ENEMIES_PER_WAVE
         self.enemies_killed = 0
@@ -135,7 +135,6 @@ class Game:
         self.wave_transition_start = 0
         self.last_spawn = 0
         self.spawn_cooldown = 2000
-        self.game_state = "playing"
         
     def spawn_enemy(self):
         current_time = pygame.time.get_ticks()
@@ -235,7 +234,7 @@ class Game:
         self.screen.blit(quit_text, quit_rect)
         
     def game_over(self):
-        self.game_state = "game_over"
+        self.game_state = GAME_OVER
         self.update_highscore()
         
     def handle_game_over_input(self):
@@ -467,6 +466,43 @@ class Game:
             self.highscore = self.player.score
             self.save_highscore()
 
+    def draw_menu(self):
+        # Fond sombre semi-transparent
+        overlay = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.SRCALPHA)
+        overlay.fill((0, 0, 0, 180))
+        self.screen.blit(overlay, (0, 0))
+        
+        # Titre du jeu
+        title_text = self.big_font.render("SHOOTER SURVIVAL", True, CYAN)
+        title_rect = title_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 3))
+        self.screen.blit(title_text, title_rect)
+        
+        # Instructions
+        start_text = self.font.render("Appuyez sur ESPACE pour commencer", True, WHITE)
+        start_rect = start_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))
+        self.screen.blit(start_text, start_rect)
+        
+        # Meilleur score
+        highscore_text = self.font.render(f"Meilleur score : {self.highscore}", True, WHITE)
+        highscore_rect = highscore_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT * 2 // 3))
+        self.screen.blit(highscore_text, highscore_rect)
+
+    def draw_pause(self):
+        # Fond sombre semi-transparent
+        overlay = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.SRCALPHA)
+        overlay.fill((0, 0, 0, 180))
+        self.screen.blit(overlay, (0, 0))
+        
+        # Texte de pause
+        pause_text = self.big_font.render("PAUSE", True, WHITE)
+        pause_rect = pause_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))
+        self.screen.blit(pause_text, pause_rect)
+        
+        # Instructions
+        resume_text = self.font.render("Appuyez sur ECHAP pour reprendre", True, WHITE)
+        resume_rect = resume_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT * 2 // 3))
+        self.screen.blit(resume_text, resume_rect)
+
     def run(self):
         while True:
             for event in pygame.event.get():
@@ -476,6 +512,15 @@ class Game:
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_m:
                         self.toggle_sound()
+                    elif event.key == pygame.K_ESCAPE:
+                        if self.game_state == PLAYING:
+                            self.game_state = PAUSED
+                        elif self.game_state == PAUSED:
+                            self.game_state = PLAYING
+                    elif event.key == pygame.K_SPACE:
+                        if self.game_state == MENU:
+                            self.reset_game()
+                            self.game_state = PLAYING
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == 1:  # Clic gauche
                         mouse_x, mouse_y = event.pos
@@ -485,30 +530,39 @@ class Game:
                             button_y <= mouse_y <= button_y + SOUND_BUTTON_SIZE):
                             self.toggle_sound()
             
-            if self.game_state == "playing":
-                # Update
+            # Fond étoilé toujours actif
+            self.screen.fill((5, 5, 15))
+            self.update_stars()
+            self.draw_stars()
+            
+            if self.game_state == MENU:
+                self.draw_menu()
+            elif self.game_state == PLAYING:
                 self.player.update()
                 if not self.wave_transition:
                     self.spawn_enemy()
                     self.update_enemies()
                 self.update_effects()
                 self.update_wave()
-                self.update_stars()
                 
-                # Draw
-                self.screen.fill((5, 5, 15))  # Fond très sombre pour les étoiles
-                self.update_stars()
-                self.draw_stars()
                 self.player.draw(self.screen)
                 self.enemies.draw(self.screen)
-                # Dessiner les balles des ennemis qui tirent
                 for enemy in self.enemies:
                     if isinstance(enemy, ShootingEnemy):
                         enemy.bullets.draw(self.screen)
                 self.draw_hud()
                 self.draw_wave_transition()
-            
-            elif self.game_state == "game_over":
+            elif self.game_state == PAUSED:
+                # Dessiner le jeu en arrière-plan
+                self.player.draw(self.screen)
+                self.enemies.draw(self.screen)
+                for enemy in self.enemies:
+                    if isinstance(enemy, ShootingEnemy):
+                        enemy.bullets.draw(self.screen)
+                self.draw_hud()
+                # Ajouter l'overlay de pause
+                self.draw_pause()
+            elif self.game_state == GAME_OVER:
                 self.handle_game_over_input()
                 self.draw_game_over()
             

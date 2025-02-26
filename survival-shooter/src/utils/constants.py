@@ -33,7 +33,9 @@ ENEMY_DAMAGE = 10
 ENEMY_SCORE = 100
 
 # Game states
+MENU = "menu"
 PLAYING = "playing"
+PAUSED = "paused"
 GAME_OVER = "game_over"
 
 # Colors for menu

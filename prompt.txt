@@ -53,3 +53,14 @@ ses réflexes et sa précision.
 - Musique de fond
 - Sons pour les ennemis
 - Effets sonores pour le joueur
+
+## Prompt 9 - Menu et Pause
+- Menu d'accueil avec titre
+- Affichage du meilleur score
+- Système de pause
+- Bouton son on/off
+
+## Prompt 10 - Effets Visuels Avancés
+- Rotation du vaisseau selon la souris
+- Fond étoilé dynamique
+- Effets de particules améliorés

@@ -18,15 +18,23 @@
   * Ennemi basique (corps à corps)
   * Ennemi tireur (distance)
 - Patterns de mouvement et d'attaque
+- Scaling de difficulté par vague
 
 4. Interface Utilisateur
+- Menu d'accueil avec :
+  * Titre du jeu
+  * Meilleur score
+  * Bouton démarrer
 - HUD en temps réel :
   * Barre de vie du joueur
   * Score actuel
   * Numéro de vague
   * Meilleur score
   * Compteur d'ennemis
-- Menu pause
+- Menu pause avec :
+  * Overlay semi-transparent
+  * Option reprendre
+  * Option son
 - Écran game over avec restart
 - Bouton son on/off
 
@@ -37,6 +45,7 @@
 - Animation de mort des ennemis
 - Fond étoilé dynamique
 - Effets rétro
+- Rotation du vaisseau selon la souris
 
 6. Sound Design
 - Sons des tirs (joueur et ennemis)
@@ -44,8 +53,10 @@
 - Son de mort des ennemis
 - Musique de fond
 - Système de gestion du volume
+- Son activable/désactivable
 
-7. Sprites
-- Sprites du joueur
-
-
+7. Sprites et Assets
+- Sprites du joueur avec rotation
+- Sprites des ennemis
+- Logo du jeu
+- Interface graphique cohérente
