@@ -1,3 +1,5 @@
+import os
+
 # Screen settings
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
@@ -48,14 +50,86 @@ TRAIL_EFFECT = True
 
 # Wave settings
 ENEMIES_PER_WAVE = 10
-WAVE_TRANSITION_TIME = 3000
+WAVE_TRANSITION_TIME = 1000
 WAVE_SPEEDUP = 100
 SHOOTER_ENEMY_CHANCE = 0.3  # 30% de chance d'avoir un ennemi qui tire
 ENEMY_BULLET_DAMAGE = 15
 
+# Base paths
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # Dossier src
+ASSETS_DIR = os.path.join(BASE_DIR, "assets")
+EFFECTS_DIR = os.path.join(ASSETS_DIR, "effects")
+
 # Assets paths
-ASSETS_DIR = "src/assets"
-PLAYER_SPRITE = f"{ASSETS_DIR}/player.png"
-ENEMY_SPRITE = f"{ASSETS_DIR}/enemy.png"
-SHOOTER_ENEMY_SPRITE = f"{ASSETS_DIR}/shooter_enemy.png"
-BULLET_SPRITE = f"{ASSETS_DIR}/bullet.png"
+PLAYER_SPRITE = os.path.join(ASSETS_DIR, "player.png")
+ENEMY_SPRITE = os.path.join(ASSETS_DIR, "enemy.png")
+SHOOTER_ENEMY_SPRITE = os.path.join(ASSETS_DIR, "shooter_enemy.png")
+BULLET_SPRITE = os.path.join(ASSETS_DIR, "bullet.png")
+ENEMY_BULLET_SPRITE = os.path.join(ASSETS_DIR, "enemy_bullet.png")
+GAME_LOGO = os.path.join(ASSETS_DIR, "logo.png")
+
+# Sound paths
+SOUND_DIR = os.path.join(ASSETS_DIR, "sounds")
+SHOOT_SOUND = os.path.join(SOUND_DIR, "shoot.wav")
+ENEMY_SHOOT_SOUND = os.path.join(SOUND_DIR, "enemy_shoot.wav")
+HIT_SOUND = os.path.join(SOUND_DIR, "hit.wav")
+ENEMY_DEATH_SOUND = os.path.join(SOUND_DIR, "enemy_death.wav")
+PLAYER_HURT_SOUND = os.path.join(SOUND_DIR, "player_hurt.wav")
+GAME_MUSIC = os.path.join(SOUND_DIR, "game_music.mp3")
+
+# Fireball settings
+FIREBALL_SPRITE = os.path.join(EFFECTS_DIR, "Part 3 Free.gif")
+FIREBALL_FRAME_SIZE = 32  # Taille originale dans le spritesheet
+FIREBALL_SCALE = 2.5     # Facteur d'échelle pour les boules de feu
+FIREBALL_SIZE = int(FIREBALL_FRAME_SIZE * FIREBALL_SCALE)  # Taille finale
+
+# Fireball colors (positions dans le spritesheet)
+FIREBALL_COLORS = {
+    "RED": 0,      # Première ligne
+    "ORANGE": 1,   # Deuxième ligne
+    "PURPLE": 2,   # Troisième ligne
+    "BLUE": 3,     # Quatrième ligne
+    "GREEN": 4,    # Cinquième ligne
+    "RAINBOW": 5   # Sixième ligne
+}
+
+# Vérification de l'existence du fichier
+if not os.path.exists(FIREBALL_SPRITE):
+    print(f"ATTENTION: Le fichier {FIREBALL_SPRITE} n'existe pas!")
+    print(f"Chemin complet attendu: {os.path.abspath(FIREBALL_SPRITE)}")
+
+# Bullet effects settings
+BULLET_COLORS = {
+    "PLAYER": {
+        "CORE": (160, 50, 255),     # Violet clair
+        "GLOW": (200, 100, 255),    # Violet plus clair
+        "TRAIL": (180, 70, 255, 80) # Violet avec transparence
+    },
+    "ENEMY": {
+        "CORE": (255, 60, 60),      # Rouge vif
+        "GLOW": (255, 100, 100),    # Rouge clair
+        "TRAIL": (255, 80, 80, 80)  # Rouge avec transparence
+    }
+}
+
+# Optimisation des effets
+MAX_TRAIL_LENGTH = 5  # Limite la longueur de la traînée
+TRAIL_UPDATE_FREQUENCY = 2  # Met à jour la traînée tous les N frames
+BULLET_SURFACE_SIZE = 32  # Taille fixe pour les surfaces de projectiles
+
+# Ajoutez ces constantes
+SOUND_ON_COLOR = (0, 255, 0)  # Vert pour le son activé
+SOUND_OFF_COLOR = (255, 0, 0)  # Rouge pour le son désactivé
+SOUND_BUTTON_SIZE = 30
+SOUND_BUTTON_PADDING = 10
+
+# 3D Settings
+PERSPECTIVE_SCALE = 1.5  # Facteur d'échelle pour l'effet de perspective
+Z_DISTANCE = 500  # Distance de base pour l'effet 3D
+ROTATION_SPEED = 2  # Vitesse de rotation des vaisseaux
+TILT_ANGLE = 15  # Angle maximum d'inclinaison des vaisseaux
+
+# Spaceship colors
+SHIP_GLOW = (100, 100, 255, 128)  # Lueur des vaisseaux
+ENGINE_COLORS = [(50, 100, 255), (100, 150, 255), (150, 200, 255)]  # Couleurs des réacteurs
+

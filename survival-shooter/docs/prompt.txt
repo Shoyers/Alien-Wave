@@ -1,5 +1,0 @@
-fonctionnalité: The game will feature a survival mode where players must fend off waves of enemies while managing resources and health. Players can collect weapons and power-ups to enhance their abilities.
-
-style/theme: The game will have a post-apocalyptic theme with dark, gritty visuals and atmospheric sound effects. The art style will be pixelated to evoke a retro gaming feel.
-
-logo: The logo will feature a stylized representation of a survivor character, incorporating elements like weapons and a desolate background to reflect the game's theme.

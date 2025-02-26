@@ -57,29 +57,45 @@ class Player:
         self.y = max(0, min(self.y, SCREEN_HEIGHT))
         self.rect.center = (self.x, self.y)
 
+    def play_sound(self, sound_type):
+        if hasattr(self, 'game'):
+            print(f"Game instance exists, sound_muted: {self.game.sound_muted}")
+            if not self.game.sound_muted:
+                if sound_type == 'shoot' and self.game.shoot_sound:
+                    print("Playing shoot sound")
+                    self.game.shoot_sound.play()
+                elif sound_type == 'hurt' and self.game.player_hurt_sound:
+                    print("Playing hurt sound")
+                    self.game.player_hurt_sound.play()
+        else:
+            print("No game instance found")
+
     def shoot(self):
         current_time = pygame.time.get_ticks()
         if current_time - self.last_shot >= SHOOT_COOLDOWN:
-            # Calcul de la direction vers la souris
             mouse_x, mouse_y = pygame.mouse.get_pos()
             dx = mouse_x - self.x
             dy = mouse_y - self.y
             distance = math.sqrt(dx**2 + dy**2)
             
             if distance != 0:
-                # Normalisation du vecteur de direction
                 direction = (dx/distance, dy/distance)
-                # Création de la balle
                 bullet = Bullet(self.x, self.y, direction)
                 self.bullets.add(bullet)
+                self.play_sound('shoot')
                 self.last_shot = current_time
 
     def draw(self, screen):
+        # Dessin des projectiles
+        for bullet in self.bullets:
+            bullet.draw(screen)
+        
+        # Dessin du joueur
         screen.blit(self.image, self.rect)
-        self.bullets.draw(screen)
 
     def take_damage(self, amount):
         self.health -= amount
+        self.play_sound('hurt')
         if self.health <= 0:
             self.die()
 

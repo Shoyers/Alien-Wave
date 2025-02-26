@@ -71,17 +71,29 @@ class Enemy(pygame.sprite.Sprite):
             return True
         return False
 
-    def take_damage(self, amount):
-        self.health -= amount
-        if self.health <= 0:
-            self.die()
-            return True
-        return False
+    def play_sound(self, sound_type):
+        if hasattr(self, 'game') and not self.game.sound_muted:
+            try:
+                if sound_type == 'shoot' and self.game.enemy_shoot_sound:
+                    pygame.mixer.find_channel(True).play(self.game.enemy_shoot_sound)
+                elif sound_type == 'death' and self.game.enemy_death_sound:
+                    pygame.mixer.find_channel(True).play(self.game.enemy_death_sound)
+                elif sound_type == 'hit' and self.game.hit_sound:
+                    pygame.mixer.find_channel(True).play(self.game.hit_sound)
+            except Exception as e:
+                print(f"Enemy sound error ({sound_type}): {e}")
 
     def die(self):
-        # Effet de mort et suppression de l'ennemi
-        self.kill()  # Retire l'ennemi du groupe de sprites
-        return ENEMY_SCORE  # Retourne les points pour le score
+        self.play_sound('death')
+        self.kill()
+        return ENEMY_SCORE
+
+    def take_damage(self, amount):
+        self.health -= amount
+        self.play_sound('hit')
+        if self.health <= 0:
+            return self.die()
+        return False
 
     def draw(self, screen):
         screen.blit(self.image, self.rect)
@@ -124,6 +136,8 @@ class ShootingEnemy(Enemy):
         distance = math.sqrt(dx**2 + dy**2)
         if distance != 0:
             direction = (dx/distance, dy/distance)
-            bullet = Bullet(self.rect.centerx, self.rect.centery, direction)
+            bullet = Bullet(self.rect.centerx, self.rect.centery, direction, is_enemy=True)
             self.bullets.add(bullet)
+            if hasattr(self, 'game') and self.game.enemy_shoot_sound and not self.game.sound_muted:
+                self.game.enemy_shoot_sound.play()
             self.last_shot = pygame.time.get_ticks()
