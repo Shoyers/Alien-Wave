@@ -30,22 +30,14 @@
   * Couleur rouge/verte
 
 4. Interface Utilisateur
-- Menu d'accueil avec :
-  * Titre du jeu
-  * Meilleur score
-  * Bouton démarrer
-- HUD en temps réel :
-  * Barre de vie du joueur
-  * Score actuel
-  * Numéro de vague
-  * Meilleur score
-  * Compteur d'ennemis
-- Menu pause avec :
-  * Overlay semi-transparent
-  * Option reprendre
-  * Option son
-- Écran game over avec restart
-- Bouton son on/off
+- Menu Manager :
+  * Gestion centralisée des menus
+  * Méthodes communes (overlay, titres, textes)
+  * Menus : principal, pause, paramètres, game over
+  * Gestion des boutons et interactions
+- HUD en temps réel
+- Système de pause
+- Écran game over
 
 5. Effets Visuels
 - Système de particules pour les tirs

@@ -41,7 +41,6 @@ class Player:
         self.last_shield_activation = 0
 
     def update(self):
-        # Gestion du mouvement avec les touches ZQSD/WASD
         keys = pygame.key.get_pressed()
         if keys[pygame.K_z] or keys[pygame.K_w]:  # Haut
             self.move(0, -PLAYER_SPEED)

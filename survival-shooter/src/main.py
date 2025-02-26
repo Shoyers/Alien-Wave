@@ -8,6 +8,7 @@ from utils.constants import *
 from game.player import Player
 from game.enemy import Enemy, ShootingEnemy
 from utils.sound_generator import SoundGenerator
+from ui.menu_manager import MenuManager
 
 def check_assets():
     print("Vérification des assets:")
@@ -106,6 +107,8 @@ class Game:
         
         # Après l'initialisation existante
         self.highscore = self.load_highscore()
+        
+        self.menu_manager = MenuManager(self)
         
     def set_volume(self, volume):
         """Configure le volume pour tous les sons"""
@@ -574,7 +577,7 @@ class Game:
             self.draw_stars()
             
             if self.game_state == MENU:
-                self.draw_menu()
+                self.menu_manager.draw_main_menu()
             elif self.game_state == PLAYING:
                 self.player.update()
                 if not self.wave_transition:
@@ -592,16 +595,9 @@ class Game:
                 self.draw_hud()
                 self.draw_wave_transition()
             elif self.game_state == PAUSED:
-                # Dessiner le jeu en arrière-plan
-                self.player.draw(self.screen)
-                for enemy in self.enemies:
-                    if isinstance(enemy, ShootingEnemy):
-                        enemy.bullets.draw(self.screen)
-                self.draw_hud()
-                # Ajouter l'overlay de pause
-                self.draw_pause()
+                self.menu_manager.draw_pause_menu()
             elif self.game_state == GAME_OVER:
-                self.draw_game_over()  # Plus besoin d'appeler handle_game_over_input()
+                self.menu_manager.draw_game_over_menu()
             
             pygame.display.flip()
             self.clock.tick(FPS)

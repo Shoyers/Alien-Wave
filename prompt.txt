@@ -1,4 +1,4 @@
-# Description du Jeu
+# Prompt par défaut
 SHOOTER SURVIVAL est un jeu de tir arcade vu du dessus avec une esthétique rétro-futuriste.
 Le joueur doit survivre à des vagues d'ennemis de plus en plus difficiles en utilisant
 ses réflexes et sa précision.
@@ -77,3 +77,10 @@ ses réflexes et sa précision.
 - Effet visuel du bouclier autour du joueur
 - Invincibilité temporaire
 - Interface de cooldown dans le HUD
+
+## Prompt 13 - Refactoring des Menus
+- Création d'une classe MenuManager dédiée
+- Centralisation de la logique des menus
+- Méthodes réutilisables pour les éléments communs
+- Meilleure organisation du code UI
+- Séparation des responsabilités menu/jeu
