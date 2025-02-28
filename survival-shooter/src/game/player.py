@@ -133,14 +133,15 @@ class Player:
 
     def take_damage(self, amount):
         if not self.shield_active:  # Ne prend des dégâts que si le bouclier n'est pas actif
-            self.health -= amount
+            self.health = max(0, self.health - amount)  # Empêche la santé de devenir négative
             self.play_sound('hurt')
             if self.health <= 0:
                 self.die()
 
     def die(self):
-        # Logic for player death
-        pass
+        # Logique pour la mort du joueur
+        if hasattr(self, 'game'):
+            self.game.game_over()
 
     def gain_score(self, points):
         self.score += points

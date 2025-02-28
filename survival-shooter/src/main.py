@@ -42,7 +42,7 @@ class Game:
         
         # Configuration de l'écran
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-        pygame.display.set_caption("SHOOTER SURVIVAL")
+        pygame.display.set_caption("ALIEN WAVE")
         
         # Chargement du logo avec gestion d'erreur
         try:
@@ -81,7 +81,7 @@ class Game:
             for sound in [self.shoot_sound, self.enemy_shoot_sound, 
                          self.hit_sound, self.enemy_death_sound, 
                          self.player_hurt_sound]:
-                sound.set_volume(0.3)
+                sound.set_volume(0.1)
                 # Réduire la durée de rétention du canal
                 sound.fadeout(100)  # Fade out après 100ms
             
@@ -445,7 +445,7 @@ class Game:
         """Charge la musique de fond"""
         try:
             pygame.mixer.music.load(GAME_MUSIC)
-            pygame.mixer.music.set_volume(0.5)
+            pygame.mixer.music.set_volume(0.1)
         except Exception as e:
             print(f"Erreur lors du chargement de la musique de fond: {e}")
 
@@ -595,6 +595,15 @@ class Game:
                 self.draw_hud()
                 self.draw_wave_transition()
             elif self.game_state == PAUSED:
+                # Afficher d'abord le jeu en arrière-plan
+                self.player.draw(self.screen)
+                for enemy in self.enemies:
+                    enemy.draw(self.screen)
+                for enemy in self.enemies:
+                    if isinstance(enemy, ShootingEnemy):
+                        enemy.bullets.draw(self.screen)
+                self.draw_hud()
+                # Puis afficher le menu de pause par-dessus
                 self.menu_manager.draw_pause_menu()
             elif self.game_state == GAME_OVER:
                 self.menu_manager.draw_game_over_menu()

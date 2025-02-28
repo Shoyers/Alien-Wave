@@ -1,5 +1,5 @@
 # Prompt par défaut
-SHOOTER SURVIVAL est un jeu de tir arcade vu du dessus avec une esthétique rétro-futuriste.
+ALIEN WAVE est un jeu de tir arcade vu du dessus avec une esthétique rétro-futuriste.
 Le joueur doit survivre à des vagues d'ennemis de plus en plus difficiles en utilisant
 ses réflexes et sa précision.
 

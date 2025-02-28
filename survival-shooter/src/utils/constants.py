@@ -54,7 +54,7 @@ TRAIL_EFFECT = True
 ENEMIES_PER_WAVE = 10
 WAVE_TRANSITION_TIME = 1000
 WAVE_SPEEDUP = 100
-WAVE_ENEMY_MULTIPLIER = 1.5  # Coefficient multiplicateur d'ennemis par vague
+WAVE_ENEMY_MULTIPLIER = 1.2  # Coefficient multiplicateur d'ennemis par vague
 SHOOTER_ENEMY_CHANCE = 0.3  # 30% de chance d'avoir un ennemi qui tire
 ENEMY_BULLET_DAMAGE = 15
 

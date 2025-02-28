@@ -10,7 +10,7 @@ class MenuManager:
         
     def draw_main_menu(self):
         self._draw_overlay()
-        self._draw_title("SHOOTER SURVIVAL", CYAN)
+        self._draw_title("ALIEN WAVE", CYAN)
         self._draw_text("Appuyez sur ESPACE pour commencer", WHITE, 0.5)
         self._draw_text(f"Meilleur score : {self.game.highscore}", WHITE, 0.66)
     
