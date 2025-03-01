@@ -1,7 +1,7 @@
-# Survival Shooter Game
+# Alien-Wave
 
 ## Description
-Survival Shooter est un jeu d'action dynamique développé avec Pygame. Les joueurs doivent survivre à des vagues d'ennemis de plus en plus difficiles en utilisant leurs réflexes et leur précision.
+Alien Wave est un jeu d'action dynamique développé avec Pygame. Les joueurs doivent survivre à des vagues d'ennemis de plus en plus difficiles en utilisant leurs réflexes et leur précision.
 
 ## Fonctionnalités
 - Déplacement du joueur avec ZQSD et tir à la souris
@@ -11,7 +11,7 @@ Survival Shooter est un jeu d'action dynamique développé avec Pygame. Les joue
 - Interface utilisateur intuitive
 
 ## Installation
-Pour commencer à jouer à Survival Shooter, suivez ces étapes :
+Pour commencer à jouer à Alien Wave, suivez ces étapes :
 
 1. Clonez le dépôt :
    ```
